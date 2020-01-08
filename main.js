@@ -1,4 +1,14 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
+let onlineStatusWindow
+
+app.on('ready', () => {
+  onlineStatusWindow = new BrowserWindow({ width: 0, height: 0, show: false })
+  onlineStatusWindow.loadURL(`file://${__dirname}/online-status.html`)
+})
+
+ipcMain.on('online-status-changed', (event, status) => {
+  console.log(status)
+})
 // Mantém a referência global do objeto da janela.
 // se você não fizer isso,
 // a janela será fechada automaticamente
@@ -17,6 +27,7 @@ function createWindow () {
 
   // and load the index.html of the app.
   win.loadFile('index.html')
+  
 
   // Open the DevTools.
   win.webContents.openDevTools()
