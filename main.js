@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
+const axios = require('axios')
 let onlineStatusWindow
 
 app.on('ready', () => {
@@ -25,8 +26,9 @@ function createWindow () {
     }
   })
 
+  data = {"age": 12, "healthy": true}
   // and load the index.html of the app.
-  win.loadFile('index.html')
+  win.loadFile('index.html',{"data": data})
   
 
   // Open the DevTools.
